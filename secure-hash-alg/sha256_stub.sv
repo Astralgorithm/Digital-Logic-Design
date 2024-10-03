@@ -21,6 +21,7 @@ module sha_padder #(parameter MSG_SIZE = 24,
     output logic [PADDED_SIZE-1:0] padded);
 
    // Pad your output (Section 2.2)
+   assign padded = {message, 1'b1, {455{1'b0}}, MSG_SIZE}; //24-bit message
 
 endmodule // sha_padder
 
@@ -54,6 +55,16 @@ module sha256 #(parameter PADDED_SIZE = 512)
    logic [31:0]   a, b, c, d, e, f, g, h;
    logic [31:0]   a63_out, b63_out, c63_out, d63_out, e63_out, f63_out, g63_out, h63_out;
    logic [31:0]   h0, h1, h2, h3, h4, h5, h6, h7;
+   logic [31:0]   W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13, W14, W15, W16, W17, W18, W19, W20, W21, W22, W23, W24, W25, W26, W27, W28, W29, W30, W31, W32, W33, W34, W35, W36, W37, W38, W39, W40, W41, W42, W43, W44, W45, W46, W47, W48, W49, W50, W51, W52, W53, W54, W55, W56, W57, W58, W59, W60, W61, W62, W63;
+
+   logic [31:0]   a0_out, a1_out, a2_out, a3_out, a4_out, a5_out, a6_out, a7_out, a8_out, a9_out, a10_out, a11_out, a12_out, a13_out, a14_out, a15_out, a16_out, a17_out, a18_out, a19_out, a20_out, a21_out, a22_out, a23_out, a24_out, a25_out, a26_out, a27_out, a28_out, a29_out, a30_out, a31_out, a32_out, a33_out, a34_out, a35_out, a36_out, a37_out, a38_out, a39_out, a40_out, a41_out, a42_out, a43_out, a44_out, a45_out, a46_out, a47_out, a48_out, a49_out, a50_out, a51_out, a52_out, a53_out, a54_out, a55_out, a56_out, a57_out, a58_out, a59_out, a60_out, a61_out, a62_out;
+   logic [31:0]   b0_out, b1_out, b2_out, b3_out, b4_out, b5_out, b6_out, b7_out, b8_out, b9_out, b10_out, b11_out, b12_out, b13_out, b14_out, b15_out, b16_out, b17_out, b18_out, b19_out, b20_out, b21_out, b22_out, b23_out, b24_out, b25_out, b26_out, b27_out, b28_out, b29_out, b30_out, b31_out, b32_out, b33_out, b34_out, b35_out, b36_out, b37_out, b38_out, b39_out, b40_out, b41_out, b42_out, b43_out, b44_out, b45_out, b46_out, b47_out, b48_out, b49_out, b50_out, b51_out, b52_out, b53_out, b54_out, b55_out, b56_out, b57_out, b58_out, b59_out, b60_out, b61_out, b62_out;
+   logic [31:0]   c0_out, c1_out, c2_out, c3_out, c4_out, c5_out, c6_out, c7_out, c8_out, c9_out, c10_out, c11_out, c12_out, c13_out, c14_out, c15_out, c16_out, c17_out, c18_out, c19_out, c20_out, c21_out, c22_out, c23_out, c24_out, c25_out, c26_out, c27_out, c28_out, c29_out, c30_out, c31_out, c32_out, c33_out, c34_out, c35_out, c36_out, c37_out, c38_out, c39_out, c40_out, c41_out, c42_out, c43_out, c44_out, c45_out, c46_out, c47_out, c48_out, c49_out, c50_out, c51_out, c52_out, c53_out, c54_out, c55_out, c56_out, c57_out, c58_out, c59_out, c60_out, c61_out, c62_out;
+   logic [31:0]   d0_out, d1_out, d2_out, d3_out, d4_out, d5_out, d6_out, d7_out, d8_out, d9_out, d10_out, d11_out, d12_out, d13_out, d14_out, d15_out, d16_out, d17_out, d18_out, d19_out, d20_out, d21_out, d22_out, d23_out, d24_out, d25_out, d26_out, d27_out, d28_out, d29_out, d30_out, d31_out, d32_out, d33_out, d34_out, d35_out, d36_out, d37_out, d38_out, d39_out, d40_out, d41_out, d42_out, d43_out, d44_out, d45_out, d46_out, d47_out, d48_out, d49_out, d50_out, d51_out, d52_out, d53_out, d54_out, d55_out, d56_out, d57_out, d58_out, d59_out, d60_out, d61_out, d62_out;
+   logic [31:0]   e0_out, e1_out, e2_out, e3_out, e4_out, e5_out, e6_out, e7_out, e8_out, e9_out, e10_out, e11_out, e12_out, e13_out, e14_out, e15_out, e16_out, e17_out, e18_out, e19_out, e20_out, e21_out, e22_out, e23_out, e24_out, e25_out, e26_out, e27_out, e28_out, e29_out, e30_out, e31_out, e32_out, e33_out, e34_out, e35_out, e36_out, e37_out, e38_out, e39_out, e40_out, e41_out, e42_out, e43_out, e44_out, e45_out, e46_out, e47_out, e48_out, e49_out, e50_out, e51_out, e52_out, e53_out, e54_out, e55_out, e56_out, e57_out, e58_out, e59_out, e60_out, e61_out, e62_out;
+   logic [31:0]   f0_out, f1_out, f2_out, f3_out, f4_out, f5_out, f6_out, f7_out, f8_out, f9_out, f10_out, f11_out, f12_out, f13_out, f14_out, f15_out, f16_out, f17_out, f18_out, f19_out, f20_out, f21_out, f22_out, f23_out, f24_out, f25_out, f26_out, f27_out, f28_out, f29_out, f30_out, f31_out, f32_out, f33_out, f34_out, f35_out, f36_out, f37_out, f38_out, f39_out, f40_out, f41_out, f42_out, f43_out, f44_out, f45_out, f46_out, f47_out, f48_out, f49_out, f50_out, f51_out, f52_out, f53_out, f54_out, f55_out, f56_out, f57_out, f58_out, f59_out, f60_out, f61_out, f62_out;
+   logic [31:0]   h0_out, h1_out, h2_out, h3_out, h4_out, h5_out, h6_out, h7_out, h8_out, h9_out, h10_out, h11_out, h12_out, h13_out, h14_out, h15_out, h16_out, h17_out, h18_out, h19_out, h20_out, h21_out, h22_out, h23_out, h24_out, h25_out, h26_out, h27_out, h28_out, h29_out, h30_out, h31_out, h32_out, h33_out, h34_out, h35_out, h36_out, h37_out, h38_out, h39_out, h40_out, h41_out, h42_out, h43_out, h44_out, h45_out, h46_out, h47_out, h48_out, h49_out, h50_out, h51_out, h52_out, h53_out, h54_out, h55_out, h56_out, h57_out, h58_out, h59_out, h60_out, h61_out, h62_out;
+   logic [31:0]   g0_out, g1_out, g2_out, g3_out, g4_out, g5_out, g6_out, g7_out, g8_out, g9_out, g10_out, g11_out, g12_out, g13_out, g14_out, g15_out, g16_out, g17_out, g18_out, g19_out, g20_out, g21_out, g22_out, g23_out, g24_out, g25_out, g26_out, g27_out, g28_out, g29_out, g30_out, g31_out, g32_out, g33_out, g34_out, g35_out, g36_out, g37_out, g38_out, g39_out, g40_out, g41_out, g42_out, g43_out, g44_out, g45_out, g46_out, g47_out, g48_out, g49_out, g50_out, g51_out, g52_out, g53_out, g54_out, g55_out, g56_out, g57_out, g58_out, g59_out, g60_out, g61_out, g62_out;
 
    prepare p1 (padded[511:480], padded[479:448], padded[447:416],
                padded[415:384], padded[383:352], padded[351:320],
@@ -478,6 +489,8 @@ module sha256 #(parameter PADDED_SIZE = 512)
    // Final output concatenating h0 through h7 outputs
    // assign hashed = {};
 
+   assign hashed = {h0, h1, h2, h3, h4, h5, h6, h7};
+
 endmodule // sha_main
 
 module prepare (input logic [31:0] M0, M1, M2, M3,
@@ -498,104 +511,9 @@ module prepare (input logic [31:0] M0, M1, M2, M3,
 		output logic [31:0] W55, W56, W57, W58, W59,
 		output logic [31:0] W60, W61, W62, W63);
 
-   logic [31:0] 		    W14_sigma1_out, 
-                         W15_sigma1_out, 
-                         W16_sigma1_out,
-                         W17_sigma1_out,
-                         W18_sigma1_out,
-                         W19_sigma1_out,
-                         W20_sigma1_out,
-                         W21_sigma1_out,
-                         W22_sigma1_out,
-                         W23_sigma1_out,
-                         W24_sigma1_out,
-                         W25_sigma1_out,
-                         W26_sigma1_out,
-                         W27_sigma1_out,
-                         W28_sigma1_out,
-                         W29_sigma1_out,
-                         W30_sigma1_out,
-                         W31_sigma1_out,
-                         W32_sigma1_out,
-                         W33_sigma1_out,
-                         W34_sigma1_out,
-                         W35_sigma1_out,
-                         W36_sigma1_out,
-                         W37_sigma1_out,
-                         W38_sigma1_out,
-                         W39_sigma1_out,
-                         W40_sigma1_out,
-                         W41_sigma1_out,
-                         W42_sigma1_out,
-                         W43_sigma1_out,
-                         W44_sigma1_out,
-                         W45_sigma1_out,
-                         W46_sigma1_out,
-                         W47_sigma1_out,
-                         W48_sigma1_out,
-                         W49_sigma1_out,
-                         W50_sigma1_out,
-                         W51_sigma1_out,
-                         W52_sigma1_out,
-                         W53_sigma1_out,
-                         W54_sigma1_out,
-                         W55_sigma1_out,
-                         W56_sigma1_out,
-                         W57_sigma1_out,
-                         W58_sigma1_out,
-                         W59_sigma1_out,
-                         W60_sigma1_out,
-                         W61_sigma1_out;
+   logic [31:0] 		    W14_sigma1_out, W15_sigma1_out, W16_sigma1_out, W17_sigma1_out, W18_sigma1_out, W19_sigma1_out, W20_sigma1_out, W21_sigma1_out, W22_sigma1_out, W23_sigma1_out, W24_sigma1_out, W25_sigma1_out, W26_sigma1_out, W27_sigma1_out, W28_sigma1_out, W29_sigma1_out, W30_sigma1_out, W31_sigma1_out, W32_sigma1_out, W33_sigma1_out, W34_sigma1_out, W35_sigma1_out, W36_sigma1_out, W37_sigma1_out, W38_sigma1_out, W39_sigma1_out, W40_sigma1_out, W41_sigma1_out, W42_sigma1_out, W43_sigma1_out, W44_sigma1_out, W45_sigma1_out, W46_sigma1_out, W47_sigma1_out, W48_sigma1_out, W49_sigma1_out, W50_sigma1_out, W51_sigma1_out, W52_sigma1_out, W53_sigma1_out, W54_sigma1_out, W55_sigma1_out, W56_sigma1_out, W57_sigma1_out, W58_sigma1_out, W59_sigma1_out, W60_sigma1_out, W61_sigma1_out;
+   logic [31:0] 		    W1_sigma0_out, W2_sigma0_out, W3_sigma0_out, W4_sigma0_out, W5_sigma0_out, W6_sigma0_out, W7_sigma0_out, W8_sigma0_out, W9_sigma0_out, W10_sigma0_out, W11_sigma0_out, W12_sigma0_out, W13_sigma0_out, W14_sigma0_out, W15_sigma0_out, W16_sigma0_out, W17_sigma0_out, W18_sigma0_out, W19_sigma0_out, W20_sigma0_out, W21_sigma0_out, W22_sigma0_out, W23_sigma0_out, W24_sigma0_out, W25_sigma0_out, W26_sigma0_out, W27_sigma0_out, W28_sigma0_out, W29_sigma0_out, W30_sigma0_out, W31_sigma0_out, W32_sigma0_out, W33_sigma0_out, W34_sigma0_out, W35_sigma0_out, W36_sigma0_out, W37_sigma0_out, W38_sigma0_out, W39_sigma0_out, W40_sigma0_out, W41_sigma0_out, W42_sigma0_out, W43_sigma0_out, W44_sigma0_out, W45_sigma0_out, W46_sigma0_out, W47_sigma0_out, W48_sigma0_out;
    
-   logic [31:0] 		    W1_sigma0_out, 
-                         W2_sigma0_out,
-                         W3_sigma0_out,
-                         W4_sigma0_out,
-                         W5_sigma0_out,
-                         W6_sigma0_out,
-                         W7_sigma0_out,
-                         W8_sigma0_out,
-                         W9_sigma0_out,
-                         W10_sigma0_out,
-                         W11_sigma0_out,
-                         W12_sigma0_out,
-                         W13_sigma0_out,
-                         W14_sigma0_out,
-                         W15_sigma0_out,
-                         W16_sigma0_out,
-                         W17_sigma0_out,
-                         W18_sigma0_out,
-                         W19_sigma0_out,
-                         W20_sigma0_out,
-                         W21_sigma0_out,
-                         W22_sigma0_out,
-                         W23_sigma0_out,
-                         W24_sigma0_out,
-                         W25_sigma0_out,
-                         W26_sigma0_out,
-                         W27_sigma0_out,
-                         W28_sigma0_out,
-                         W29_sigma0_out,
-                         W30_sigma0_out,
-                         W31_sigma0_out,
-                         W32_sigma0_out,
-                         W33_sigma0_out,
-                         W34_sigma0_out,
-                         W35_sigma0_out,
-                         W36_sigma0_out,
-                         W37_sigma0_out,
-                         W38_sigma0_out,
-                         W39_sigma0_out,
-                         W40_sigma0_out,
-                         W41_sigma0_out,
-                         W42_sigma0_out,
-                         W43_sigma0_out,
-                         W44_sigma0_out,
-                         W45_sigma0_out,
-                         W46_sigma0_out,
-                         W47_sigma0_out,
-                         W48_sigma0_out;
-
    // Equation for W_i (top of page 7)
    assign W0 = M0;
    assign W1 = M1;
@@ -720,29 +638,28 @@ endmodule // choice
 module Sigma0 (input logic [31:0] x, output logic [31:0] Sig0);
 
    // See Section 2.3.3, Number 4
-   assign Sig0 = {x[1:0], x[31:3]} ^ {x[12:0], x[31:14]} ^ {x[21:0], x[31:23]};
+   assign Sig0 = {x[1:0], x[31:2]} ^ {x[12:0], x[31:13]} ^ {x[21:0], x[31:22]};
 
 endmodule // Sigma0
 
 module sigma0 (input logic [31:0] x, output logic [31:0] sig0);
 
-      // See Section 2.3.3, Number 2
-   
+   // See Section 2.3.3, Number 2
+   assign sig0 = {x[6:0], x[31:7]} ^ {x[17:0], x[31:18]} ^ (x >> 3);
 
 endmodule // sigma0
 
 module Sigma1 (input logic [31:0] x, output logic [31:0] Sig1);
 
    // See Section 2.3.3, Number 4
-   assign Sig1 = {x[5:0], x[31:7]} ^ {x[10:0], x[31:12]} ^ {x[24:0], x[31:26]};
+   assign Sig1 = {x[5:0], x[31:6]} ^ {x[10:0], x[31:11]} ^ {x[24:0], x[31:25]};
 
 endmodule // Sigma1
 
 module sigma1 (input logic [31:0] x, output logic [31:0] sig1);
 
       // See Section 2.3.3, Number 2
-   
-
+      assign sig1 = {x[16:0], x[31:17]} ^ {x[18:0], x[31:19]} ^ (x >> 10);
 
 endmodule // sigma1
 
