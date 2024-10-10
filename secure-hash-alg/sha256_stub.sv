@@ -20,8 +20,11 @@ module sha_padder #(parameter MSG_SIZE = 24,
    (input logic [MSG_SIZE-1:0] message,
     output logic [PADDED_SIZE-1:0] padded);
 
+localparam zero_width = PADDED_SIZE - 64 - MSG_SIZE - 1;
+localparam back_0_width = 64 - $bits(MSG_SIZE);
+
    // Pad your output (Section 2.2)
-   assign padded = {message, 1'b1, {455{1'b0}}, MSG_SIZE}; //24-bit message
+   assign padded = {message, 1’b1, {zero_width{1’b0}}, {back_0_width{1’b0}}, MSG_SIZE};
 
 endmodule // sha_padder
 
@@ -535,10 +538,106 @@ module prepare (input logic [31:0] M0, M1, M2, M3,
    // sigma 1 (see bottom of page 6)
    sigma1 sig1_1 (W14, W14_sigma1_out);
 
+   sigma1 sig1_2 (W15, W15_sigma1_out); 
+   sigma1 sig1_3 (W16, W16_sigma1_out); 
+   sigma1 sig1_4 (W17, W17_sigma1_out); 
+   sigma1 sig1_5 (W18, W18_sigma1_out); 
+   sigma1 sig1_6 (W19, W19_sigma1_out); 
+   sigma1 sig1_7 (W20, W20_sigma1_out); 
+   sigma1 sig1_8 (W21, W21_sigma1_out); 
+   sigma1 sig1_9 (W22, W22_sigma1_out); 
+   sigma1 sig1_10 (W23, W23_sigma1_out); 
+   sigma1 sig1_11 (W24, W24_sigma1_out); 
+   sigma1 sig1_12 (W25, W25_sigma1_out); 
+   sigma1 sig1_13 (W26, W26_sigma1_out); 
+   sigma1 sig1_14 (W27, W27_sigma1_out); 
+   sigma1 sig1_15 (W28, W28_sigma1_out); 
+   sigma1 sig1_16 (W29, W29_sigma1_out); 
+   sigma1 sig1_17 (W30, W30_sigma1_out); 
+   sigma1 sig1_18 (W31, W31_sigma1_out); 
+   sigma1 sig1_19 (W32, W32_sigma1_out); 
+   sigma1 sig1_20 (W33, W33_sigma1_out); 
+   sigma1 sig1_21 (W34, W34_sigma1_out); 
+   sigma1 sig1_22 (W35, W35_sigma1_out); 
+   sigma1 sig1_23 (W36, W36_sigma1_out); 
+   sigma1 sig1_24 (W37, W37_sigma1_out); 
+   sigma1 sig1_25 (W38, W38_sigma1_out); 
+   sigma1 sig1_26 (W39, W39_sigma1_out); 
+   sigma1 sig1_27 (W40, W40_sigma1_out); 
+   sigma1 sig1_28 (W41, W41_sigma1_out); 
+   sigma1 sig1_29 (W42, W42_sigma1_out); 
+   sigma1 sig1_30 (W43, W43_sigma1_out); 
+   sigma1 sig1_31 (W44, W44_sigma1_out); 
+   sigma1 sig1_32 (W45, W45_sigma1_out); 
+   sigma1 sig1_33 (W46, W46_sigma1_out); 
+   sigma1 sig1_34 (W47, W47_sigma1_out); 
+   sigma1 sig1_35 (W48, W48_sigma1_out); 
+   sigma1 sig1_36 (W49, W49_sigma1_out); 
+   sigma1 sig1_37 (W50, W50_sigma1_out); 
+   sigma1 sig1_38 (W51, W51_sigma1_out); 
+   sigma1 sig1_39 (W52, W52_sigma1_out); 
+   sigma1 sig1_40 (W53, W53_sigma1_out); 
+   sigma1 sig1_41 (W54, W54_sigma1_out); 
+   sigma1 sig1_42 (W55, W55_sigma1_out); 
+   sigma1 sig1_43 (W56, W56_sigma1_out); 
+   sigma1 sig1_44 (W57, W57_sigma1_out); 
+   sigma1 sig1_45 (W58, W58_sigma1_out); 
+   sigma1 sig1_46 (W59, W59_sigma1_out);
+   sigma1 sig1_47 (W60, W60_sigma1_out); 
+   sigma1 sig1_48 (W61, W61_sigma1_out);
+
    // fill in other sigma1 blocks
 
    // sigma 0 (see bottom of page 6)
    sigma0 sig0_1 (W1, W1_sigma0_out);
+
+   sigma0 sig0_2 (W2, W2_sigma0_out);
+   sigma0 sig0_3 (W3, W3_sigma0_out);
+   sigma0 sig0_4 (W4, W4_sigma0_out);
+   sigma0 sig0_5 (W5, W5_sigma0_out);
+   sigma0 sig0_6 (W6, W6_sigma0_out);
+   sigma0 sig0_7 (W7, W7_sigma0_out);
+   sigma0 sig0_8 (W8, W8_sigma0_out);
+   sigma0 sig0_9 (W9, W9_sigma0_out);
+   sigma0 sig0_10 (W10, W10_sigma0_out);
+   sigma0 sig0_11 (W11, W11_sigma0_out);
+   sigma0 sig0_12 (W12, W12_sigma0_out);
+   sigma0 sig0_13 (W13, W13_sigma0_out);
+   sigma0 sig0_14 (W14, W14_sigma0_out);
+   sigma0 sig0_15 (W15, W15_sigma0_out);
+   sigma0 sig0_16 (W16, W16_sigma0_out);
+   sigma0 sig0_17 (W17, W17_sigma0_out);
+   sigma0 sig0_18 (W18, W18_sigma0_out);
+   sigma0 sig0_19 (W19, W19_sigma0_out);
+   sigma0 sig0_20 (W20, W20_sigma0_out);
+   sigma0 sig0_21 (W21, W21_sigma0_out);
+   sigma0 sig0_22 (W22, W22_sigma0_out);
+   sigma0 sig0_23 (W23, W23_sigma0_out);
+   sigma0 sig0_24 (W24, W24_sigma0_out);
+   sigma0 sig0_25 (W25, W25_sigma0_out);
+   sigma0 sig0_26 (W26, W26_sigma0_out);
+   sigma0 sig0_27 (W27, W27_sigma0_out);
+   sigma0 sig0_28 (W28, W28_sigma0_out);
+   sigma0 sig0_29 (W29, W29_sigma0_out);
+   sigma0 sig0_30 (W30, W30_sigma0_out);
+   sigma0 sig0_31 (W31, W31_sigma0_out);
+   sigma0 sig0_32 (W32, W32_sigma0_out);
+   sigma0 sig0_33 (W33, W33_sigma0_out);
+   sigma0 sig0_34 (W34, W34_sigma0_out);
+   sigma0 sig0_35 (W35, W35_sigma0_out);
+   sigma0 sig0_36 (W36, W36_sigma0_out);
+   sigma0 sig0_37 (W37, W37_sigma0_out);
+   sigma0 sig0_38 (W38, W38_sigma0_out);
+   sigma0 sig0_39 (W39, W39_sigma0_out);
+   sigma0 sig0_40 (W40, W40_sigma0_out);
+   sigma0 sig0_41 (W41, W41_sigma0_out);
+   sigma0 sig0_42 (W42, W42_sigma0_out);
+   sigma0 sig0_43 (W43, W43_sigma0_out);
+   sigma0 sig0_44 (W44, W44_sigma0_out);
+   sigma0 sig0_45 (W45, W45_sigma0_out);
+   sigma0 sig0_46 (W46, W46_sigma0_out);
+   sigma0 sig0_47 (W47, W47_sigma0_out);
+   sigma0 sig0_48 (W48, W48_sigma0_out);
 
    // fill in other sigma0 blocks
 
@@ -591,8 +690,6 @@ module prepare (input logic [31:0] M0, M1, M2, M3,
    assign W61 = W59_sigma1_out + W54 + W46_sigma0_out + W45;
    assign W62 = W60_sigma1_out + W55 + W47_sigma0_out + W46;
    assign W63 = W61_sigma1_out + W56 + W48_sigma0_out + W47;
-   // fill in other W18 through W63   
-
 endmodule // prepare
 
 
@@ -601,8 +698,27 @@ module main_comp (input logic [31:0] a_in, b_in, c_in, d_in, e_in, f_in, g_in, h
 		  output logic [31:0] a_out, b_out, c_out, d_out, e_out, f_out, g_out,
 		  output logic [31:0] h_out);
 
-   // Figure 4
+   logic [31:0] ch;
+   logic [31:0] maj;
+   logic [31:0] Sig0;
+   logic [31:0] Sig1;
 
+   choice Choice (e_in, f_in, g_in, ch);
+   Sigma1 Sig256_1 (e_in, Sig1);
+   assign T1 = h_in + Sig1 + ch + K_in + W_in;
+
+   majority Maj (a_in, b_in, c_in, maj);
+   Sigma0 Sig256_0 (a_in, Sig0);
+   assign T2 = Sig0 + maj;
+
+   assign h_out = g_in;
+   assign g_out = f_in;
+   assign f_out = e_in;
+   assign e_out = d_in + T1;
+   assign d_out = c_in;
+   assign c_out = b_in;
+   assign b_out = a_in;
+   assign a_out = T1 + T2;
 
 endmodule // main_comp
 
@@ -662,7 +778,3 @@ module sigma1 (input logic [31:0] x, output logic [31:0] sig1);
       assign sig1 = {x[16:0], x[31:17]} ^ {x[18:0], x[31:19]} ^ (x >> 10);
 
 endmodule // sigma1
-
-     
-   
-
