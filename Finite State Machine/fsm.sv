@@ -28,7 +28,8 @@ module FSM (clk, reset, left, right, L1, L2, L3, R1, R2, R3);
          R1 <= 1'b0; // R 000
          R2 <= 1'b0; //   123
          R3 <= 1'b0;         
-         if (left & ~right) nextstate <= S1;
+         if (~left & ~right) nextstate <= S0;
+         else if (left & ~right) nextstate <= S1;
          else if (right & ~left) nextstate <= S4;
          else if (left & right) nextstate <= S7;
        end
@@ -105,7 +106,7 @@ module FSM (clk, reset, left, right, L1, L2, L3, R1, R2, R3);
        end
 
        S8: begin
-	       L1 <= 1'b1; // L 011 
+	     L1 <= 1'b1; // L 011 
          L2 <= 1'b1; //   321
          L3 <= 1'b0;   
          R1 <= 1'b1; // R 011
