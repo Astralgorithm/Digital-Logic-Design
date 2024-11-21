@@ -53,4 +53,4 @@ module stimulus;
             #21 reset = 1'b0;
             #0 start = 1'b1;
         end    
-endmodule // stimulus
+endmodule // Stimulus
